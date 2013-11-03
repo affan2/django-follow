@@ -5,7 +5,9 @@
 {#% block title %}{% trans "vendors" %}{% endblock %#}
 
 {% block content %}
-
+{% if not is_incremental %}
+<div class="scrollContainer" style="min-width:500px;max-height:500px;overflow:auto;" data-href="{{data_href}}" data-chunk="5">
+{% endif %}
 <table>
 {% for vendor in vendors %}
     <tr>
@@ -28,6 +30,8 @@
     </tr>
 {% endfor %}
 </table>
-
+{% if not is_incremental %}
+</div>
+{% endif %}
 
 {% endblock %}

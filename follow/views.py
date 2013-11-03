@@ -2,6 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.db.models.loading import cache
 from django.http import HttpResponse, HttpResponseRedirect, \
     HttpResponseServerError, HttpResponseBadRequest
+from django.core.urlresolvers import reverse
+from django.conf import settings
+from django.template.loader import render_to_string
+
 from follow.utils import follow as _follow, unfollow as _unfollow, toggle as _toggle
 from follow import utils
 from django.template import RequestContext
@@ -10,6 +14,8 @@ from django.contrib.contenttypes.models import ContentType
 from mezzanine.blog.models import BlogPost
 from django.utils import simplejson
 from follow.models import Follow
+
+import json
 
 def check(func):
     """ 
@@ -80,15 +86,46 @@ def get_vendor_followers_subset(request, content_type_id, object_id, sIndex, lIn
     obj = get_object_or_404(ctype.model_class(), pk=object_id)
     s = (int)(""+sIndex)
     l = (int)(""+lIndex)
-    followers = utils.get_follower_users_subset_for_vendor(obj,s,l)
-    if request.is_ajax():
+
+    followers = utils.get_follower_users_subset_for_vendor(obj, s, l)
+
+    if s == 0:
+        data_href = reverse('get_vendor_followers_subset', kwargs={ 'content_type_id':content_type_id,
+                                                            'object_id':object_id,
+                                                            'sIndex':0,
+                                                            'lIndex':settings.MIN_FOLLOWERS_CHUNK})
+
         return render_to_response("follow/friend_list_all.html", {
             "friends": followers,
+            'is_incremental': False,
+            'data_href':data_href
         }, context_instance=RequestContext(request))
+
+    
+
+    #if request.is_ajax():
+    context = RequestContext(request)
+
+    context.update({'friends': followers,
+                    'is_incremental': True})
+
+    template = 'follow/friend_list_all.html'
+    if followers:
+        ret_data = {
+            'html': render_to_string(template, context_instance=context).strip(),
+            'success': True
+        }
     else:
-        return render_to_response("follow/render_friend_list_all.html", {
-            "friends": followers,
-        }, context_instance=RequestContext(request))       
+        ret_data = {
+            'success': False
+        }
+
+    return HttpResponse(json.dumps(ret_data), mimetype="application/json")
+
+    # else:
+    #     return render_to_response("follow/render_friend_list_all.html", {
+    #         "friends": followers,
+    #     }, context_instance=RequestContext(request))       
 
 def get_vendor_following(request, content_type_id, object_id):
     ctype = get_object_or_404(ContentType, pk=content_type_id)
@@ -107,11 +144,42 @@ def get_vendor_following_subset(request, content_type_id, object_id, sIndex, lIn
     user = get_object_or_404(ctype.model_class(), pk=object_id)
     s = (int)(""+sIndex)
     l = (int)(""+lIndex)
+
     vendors = utils.get_following_vendors_subset_for_user(user, s, l)
-    if request.is_ajax():
+
+    if s == 0:
+        data_href = reverse('get_vendor_following_subset', kwargs={ 'content_type_id':content_type_id,
+                                                            'object_id':object_id,
+                                                            'sIndex':0,
+                                                            'lIndex':settings.MIN_FOLLOWERS_CHUNK})
+
         return render_to_response("follow/vendor_following.html", {
-            "vendors": vendors
+            "vendors": vendors,
+            'is_incremental': False,
+            'data_href':data_href
         }, context_instance=RequestContext(request))
+
+    
+
+    if request.is_ajax():
+        context = RequestContext(request)
+
+        context.update({'vendors': vendors,
+                        'is_incremental': True})
+
+        template = 'follow/vendor_following.html'
+        if vendors:
+            ret_data = {
+                'html': render_to_string(template, context_instance=context).strip(),
+                'success': True
+            }
+        else:
+            ret_data = {
+                'success': False
+            }
+
+        return HttpResponse(json.dumps(ret_data), mimetype="application/json")
+
     else:
         return render_to_response("follow/render_vendor_following.html", {
             "vendors": vendors

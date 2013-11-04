@@ -103,29 +103,29 @@ def get_vendor_followers_subset(request, content_type_id, object_id, sIndex, lIn
 
     
 
-    #if request.is_ajax():
-    context = RequestContext(request)
+    if request.is_ajax():
+	    context = RequestContext(request)
 
-    context.update({'friends': followers,
-                    'is_incremental': True})
+	    context.update({'friends': followers,
+	                    'is_incremental': True})
 
-    template = 'follow/friend_list_all.html'
-    if followers:
-        ret_data = {
-            'html': render_to_string(template, context_instance=context).strip(),
-            'success': True
-        }
+	    template = 'follow/friend_list_all.html'
+	    if followers:
+	        ret_data = {
+	            'html': render_to_string(template, context_instance=context).strip(),
+	            'success': True
+	        }
+	    else:
+	        ret_data = {
+	            'success': False
+	        }
+
+	    return HttpResponse(json.dumps(ret_data), mimetype="application/json")
+
     else:
-        ret_data = {
-            'success': False
-        }
-
-    return HttpResponse(json.dumps(ret_data), mimetype="application/json")
-
-    # else:
-    #     return render_to_response("follow/render_friend_list_all.html", {
-    #         "friends": followers,
-    #     }, context_instance=RequestContext(request))       
+        return render_to_response("follow/render_friend_list_all.html", {
+            "friends": followers,
+        }, context_instance=RequestContext(request))       
 
 def get_vendor_following(request, content_type_id, object_id):
     ctype = get_object_or_404(ContentType, pk=content_type_id)

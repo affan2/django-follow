@@ -12,7 +12,7 @@
 {% for vendor in vendors %}
     <tr>
     <td>
-        {% include 'actstream/render_actor.html' with actor=vendor %}
+        {% include 'generic/includes/render_owner.html' with owner=vendor %}
     </td>
     <td>
       <a href='{{vendor.get_absolute_url}}'>{{ vendor }}</a>  

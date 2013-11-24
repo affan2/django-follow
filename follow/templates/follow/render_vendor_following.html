@@ -16,11 +16,11 @@
                 </div>
                 <div class="span1 halfGutter topHalfGutter">
                     <span id="vendorFollowContainer" class="{% if request.user|is_following:vendor %}following{% endif %}" >
-                        <a href="#" class="follow-btn icon-follow" data-id="vendor_followers" data-href="{% follow_url vendor %}">Follow</a>
+                        <a href="#" class="follow-btn icon-follow" data-href="{% follow_url vendor %}">Follow</a>
 
-                        <a class="icon-following radioColor" data-id="vendor_followers">Follow</a>
+                        <a class="icon-following radioColor">Follow</a>
 
-                        <a href="#" class="unfollow-btn icon-unfollow" data-id="vendor_followers" data-href="{% follow_url vendor %}"><img class="noBoxShadow" src="/static/img/1transparent.png"></a>
+                        <a href="#" class="unfollow-btn icon-unfollow" data-href="{% follow_url vendor %}"><img class="noBoxShadow" src="/static/img/1transparent.png"></a>
                     </span>
                 </div>
         {% endfor %}

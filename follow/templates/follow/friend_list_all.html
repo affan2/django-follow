@@ -25,11 +25,11 @@
                 {% include 'actstream/render_actor_name.html' with actor=friend %}  
             </div>
         {% endif %}
-        {% empty %}
-        <div class="row vendorResult">
-            <div class="span2">
-                {% trans "No contact to list" %}
-            </div>
+    </div>
+    {% empty %}
+    <div class="row vendorResult">
+        <div class="span2">
+            {% trans "No contact to list" %}
         </div>
     </div>
 {% endfor %}

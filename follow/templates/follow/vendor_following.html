@@ -6,12 +6,12 @@
 <div class="scrollContainer" style="max-height:500px;overflow:auto;" data-href="{{data_href}}" data-chunk="10">
 {% endif %}
 {% for vendor in vendors %}
-    <div class="row vendorResult bottomHalfGutter">
+    <div class="row vendorResult bottomHalfGutter{% if forloop.first %} topHalfGutter{% endif %}">
         {% include 'generic/includes/render_owner.html' with owner=vendor %}
-        <div class="span1 noGutter topHalfGutter">
+        <div class="span1 noGutter">
             <a class="fontHelvetica radioColor fontSize13" href='{{vendor.get_absolute_url}}'>{{ vendor }}</a>  
         </div>
-        <div class="span1 halfGutter topHalfGutter">
+        <div class="span1 halfGutter">
             <span id="vendorFollowContainer" class="makeYellowButton {% if request.user|is_following:vendor %}following{% endif %}" >
                 <a href="#" class="follow-btn icon-follow" data-href="{% follow_url vendor %}">Follow</a>
 

@@ -1,37 +1,26 @@
-{#% extends "base.html" %#}
 {% load i18n %}
-{% load thumbnail %}
 {% load follow_tags %}
 {#% block title %}{% trans "vendors" %}{% endblock %#}
 
-{% block content %}
 {% if not is_incremental %}
 <div class="scrollContainer" style="max-height:500px;overflow:auto;" data-href="{{data_href}}" data-chunk="10">
 {% endif %}
-<table>
 {% for vendor in vendors %}
-    <tr>
-    <td>
+    <div class="row vendorResult bottomHalfGutter">
         {% include 'generic/includes/render_owner.html' with owner=vendor %}
-    </td>
-    <td>
-      <a href='{{vendor.get_absolute_url}}'>{{ vendor }}</a>  
-    </td>
-        <td>
-        <div  class="follow-button-container action-follow-user {% if request.user|is_following:vendor %}following{% endif %}" style="position:relative;right:-50px;">
-        <a href="{% follow_url vendor %}" class="follow-btn form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow" data-id="vendor_followers">Follow</a>
+        <div class="span1 noGutter topHalfGutter">
+            <a class="fontHelvetica radioColor fontSize13" href='{{vendor.get_absolute_url}}'>{{ vendor }}</a>  
+        </div>
+        <div class="span1 halfGutter topHalfGutter">
+            <span id="vendorFollowContainer" class="{% if request.user|is_following:vendor %}following{% endif %}" >
+                <a href="#" class="follow-btn icon-follow" data-id="vendor_followers" data-href="{% follow_url vendor %}">Follow</a>
 
-        <a class="form-button form-button-following form-button-small form-button-light-and-grey form-button-left-icon form-button-icon-following" data-id="vendor_followers">Following</a>
-        
-        <a href="{% follow_url vendor %}" class="unfollow-btn form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow" data-id="vendor_followers" >Unfollow</a>
-        </div> 
-        </td>
+                <a class="icon-following radioColor" data-id="vendor_followers">Follow</a>
 
-    </tr>
+                <a href="#" class="unfollow-btn icon-unfollow" data-id="vendor_followers" data-href="{% follow_url vendor %}"><img class="noBoxShadow" src="/static/img/1transparent.png"></a>
+            </span>
+        </div>
 {% endfor %}
-</table>
 {% if not is_incremental %}
 </div>
 {% endif %}
-
-{% endblock %}

@@ -26,6 +26,12 @@
             </div>
         {% endif %}
     </div>
+    {% empty %}
+    <div class="row vendorResult">
+        <div class="span2">
+            {% trans "No contact to list" %}
+        </div>
+    </div>
 {% endfor %}
 {% if not is_incremental %}
 </div>

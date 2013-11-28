@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n static %}
 {% load follow_tags %}
 {#% block title %}{% trans "vendors" %}{% endblock %#}
 
@@ -17,7 +17,7 @@
 
                 <a class="icon-following radioColor">Follow</a>
 
-                <a href="#" class="unfollow-btn icon-unfollow" data-href="{% follow_url vendor %}"><img class="noBoxShadow" src="/static/img/1transparent.png"></a>
+                <a href="#" class="unfollow-btn icon-unfollow" data-href="{% follow_url vendor %}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}"></a>
             </span>
         </div>
         {% empty %}

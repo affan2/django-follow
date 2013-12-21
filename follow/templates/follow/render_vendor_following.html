@@ -15,7 +15,7 @@
                     <a class="fontHelvetica radioColor fontSize13" href='{{vendor.get_absolute_url}}'>{{ vendor }}</a>  
                 </div>
                 <div class="span1 halfGutter">
-                    <span id="vendorFollowContainer" class="makeYellowButton {% if request.user|is_following:vendor %}following{% endif %}" >
+                    <span class="vendorFollowContainer makeYellowButton {% if request.user|is_following:vendor %}following{% endif %}" >
                         <a href="#" class="follow-btn icon-follow" data-href="{% follow_url vendor %}">Follow</a>
 
                         <a class="icon-following radioColor">Follow</a>

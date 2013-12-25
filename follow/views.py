@@ -144,6 +144,11 @@ def get_vendor_following_subset(request, content_type_id, object_id, sIndex, lIn
     user = get_object_or_404(ctype.model_class(), pk=object_id)
     s = (int)(""+sIndex)
     l = (int)(""+lIndex)
+    isVertical = request.GET.get('v', '0')
+
+    template = 'generic/vendor_list.html'
+    if isVertical == '1':
+        template = 'generic/vendor_list_v.html'
 
     vendors = utils.get_following_vendors_subset_for_user(user, s, l)
 
@@ -153,7 +158,7 @@ def get_vendor_following_subset(request, content_type_id, object_id, sIndex, lIn
                                                             'sIndex':0,
                                                             'lIndex':settings.MIN_FOLLOWERS_CHUNK})
 
-        return render_to_response("follow/vendor_following.html", {
+        return render_to_response(template, {
             "vendors": vendors,
             'is_incremental': False,
             'data_href':data_href
@@ -167,7 +172,7 @@ def get_vendor_following_subset(request, content_type_id, object_id, sIndex, lIn
         context.update({'vendors': vendors,
                         'is_incremental': True})
 
-        template = 'follow/vendor_following.html'
+
         if vendors:
             ret_data = {
                 'html': render_to_string(template, context_instance=context).strip(),

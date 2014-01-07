@@ -98,7 +98,8 @@ def get_vendor_followers_subset(request, content_type_id, object_id, sIndex, lIn
         return render_to_response("follow/friend_list_all.html", {
             "friends": followers,
             'is_incremental': False,
-            'data_href':data_href
+            'data_href':data_href,
+            'data_chunk':settings.MIN_FOLLOWERS_CHUNK
         }, context_instance=RequestContext(request))
 
     

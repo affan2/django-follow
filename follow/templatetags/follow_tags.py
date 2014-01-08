@@ -198,7 +198,7 @@ def vendor_following_subset_info_url(parser, token):
         return UserFollowingVendorsListSubset.handle_token(parser, token)
 
 @register.simple_tag(takes_context=True)
-def render_vendor_following_subset(context, user_obj, sIndex, lIndex, data_chunk=settings.MIN_FOLLOWERS_CHUNK, orientation='horizontal'):
+def render_vendor_following_subset(context, user_obj, sIndex, lIndex, data_chunk=settings.MIN_FOLLOWERS_CHUNK, orientation='horizontal', user_list = 'false'):
     vendors = utils.get_following_vendors_subset_for_user(user_obj, sIndex, lIndex)
     template_name = 'generic/vendor_list.html'
     search_param = ''
@@ -216,7 +216,8 @@ def render_vendor_following_subset(context, user_obj, sIndex, lIndex, data_chunk
             "vendors": vendors,
             'is_incremental': False,
             'data_href':data_href + search_param,
-            'data_chunk': data_chunk
+            'data_chunk': data_chunk,
+            'user_list': user_list
         }))
 
 @register.tag

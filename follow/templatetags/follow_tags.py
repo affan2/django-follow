@@ -217,7 +217,8 @@ def render_vendor_following_subset(context, user_obj, sIndex, lIndex, data_chunk
             'is_incremental': False,
             'data_href':data_href + search_param,
             'data_chunk': data_chunk,
-            'user_list': user_list
+            'user_list': user_list,
+            'profile_user': user_obj
         }))
 
 @register.tag

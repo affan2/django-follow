@@ -11,10 +11,10 @@
             <a class="fontHelvetica radioColor fontSize13" href='{{vendor.get_absolute_url}}'>{{ vendor }}</a>  
         </div>
         <div class="span1 halfGutter">
-            <span class="vendorFollowContainer pagination-centered makeYellowButton {% if request.user|is_following:vendor %}following{% endif %}" >
-                <a href="javascript:void(0)" class="follow-btn icon-follow" data-href="{% follow_url vendor %}">{% trans "Follow" %}</a>
-                <a class="icon-following radioColor"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Following" %}</a>
-                <a href="javascript:void(0)" class="unfollow-btn icon-unfollow radioColor" data-href="{% follow_url vendor %}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Unfollow" %}</a>
+            <span class="vendorFollowContainer pagination-centered {% if request.user|is_following:vendor %}following{% endif %}" >
+                <button class="follow-btn makeYellowButton icon-follow" data-href="{% follow_url vendor %}">{% trans "Follow" %}</button>
+                <button class="icon-following makeYellowButton radioColor"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Following" %}</button>
+                <button class="unfollow-btn makeYellowButton icon-unfollow radioColor" data-href="{% follow_url vendor %}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Unfollow" %}</button>
             </span>
         </div>
         {% empty %}

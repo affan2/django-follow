@@ -4,8 +4,8 @@
 	{% csrf_token %}
     <input type="hidden" name="next" value="{{ request.get_full_path }}" />
 	{% if request.user|is_following:object %}
-        <a href="#" onclick="$(this).closest('form').submit(); return false;" class=" btn btn-danger btn-sm" style="margin-left: 10px"><span class="glyphicon glyphicon-minus-sign"></span> {% trans "Unfollow" %}</a>
+        <a href="#" onclick="$(this).closest('form').submit(); return false;" class=" btn btn-danger btn-sm" style="margin-left: 10px"><i class="fas fa-minus-circle"></i> {% trans "Unfollow" %}</a>
 	{% else %}
-        <a href="#" onclick="$(this).closest('form').submit(); return false;" class=" btn btn-primary btn-sm" style="margin-left: 10px"><span class="glyphicon glyphicon-plus-sign"></span> {% trans "Follow" %}</a>
+        <a href="#" onclick="$(this).closest('form').submit(); return false;" class=" btn btn-primary btn-sm" style="margin-left: 10px"><i class="fas fa-plus-circle"></i> {% trans "Follow" %}</a>
 	{% endif %}
 </form>

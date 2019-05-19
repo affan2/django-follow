@@ -39,7 +39,7 @@ def check(func):
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
             if follow:
                 return HttpResponseServerError('"%s" object of type ``%s`` has no method ``get_absolute_url()``.' % (
-                    unicode(follow.target), follow.target.__class__))
+                    str(follow.target), follow.target.__class__))
             return HttpResponseServerError('No follow object and `next` parameter found.')
     return iCheck
 

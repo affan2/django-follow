@@ -147,10 +147,10 @@ class FollowTest(TestCase):
         self.assertEqual("True", tpl.render(ctx))
         
         tpl = template.Template("""{% load follow_tags %}{% follow_form obj %}""")
-        self.assertEqual(True, isinstance(tpl.render(ctx), unicode))
+        self.assertEqual(True, isinstance(tpl.render(ctx), str))
         
         tpl = template.Template("""{% load follow_tags %}{% follow_form obj "follow/form.html" %}""")
-        self.assertEqual(True, isinstance(tpl.render(ctx), unicode))
+        self.assertEqual(True, isinstance(tpl.render(ctx), str))
 
     def test_signals(self):
         Handler = type('Handler', (object,), {

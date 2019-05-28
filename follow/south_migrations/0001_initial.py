@@ -18,11 +18,9 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'follow', ['Follow'])
 
-
     def backwards(self, orm):
         # Deleting model 'Follow'
         db.delete_table(u'follow_follow')
-
 
     models = {
         u'actstream.action': {

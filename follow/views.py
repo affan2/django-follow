@@ -11,7 +11,7 @@ from follow import utils
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.contenttypes.models import ContentType
-from mezzanine.blog.models import BlogPost
+# from mezzanine.blog.models import BlogPost
 import json
 from follow.models import Follow
 
@@ -42,7 +42,7 @@ def check(func):
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
             if follow:
                 return HttpResponseServerError('"%s" object of type ``%s`` has no method ``get_absolute_url()``.' % (
-                    unicode(follow.target), follow.target.__class__))
+                    str(follow.target), follow.target.__class__))
             return HttpResponseServerError('No follow object and `next` parameter found.')
     return iCheck
 
@@ -92,7 +92,6 @@ def get_vendor_followers_subset(request, content_type_id, object_id, sIndex, lIn
                                                             'object_id':object_id,
                                                             'sIndex':0,
                                                             'lIndex':settings.MIN_FOLLOWERS_CHUNK})
-
         return render_to_response("follow/friend_list_all.html", {
             "friends": followers,
             'is_incremental': False,
@@ -102,22 +101,20 @@ def get_vendor_followers_subset(request, content_type_id, object_id, sIndex, lIn
 
     if request.is_ajax():
         context = RequestContext(request)
-        context.update({'friends': followers,
-	                    'is_incremental': True})
+        context.update({'friends': followers, 'is_incremental': True})
         template = 'follow/friend_list_all.html'
         if followers:
-	        ret_data = {
-	            'html': render_to_string(template, context).strip(),
-	            'success': True}
-	    else:
-	        ret_data = {
-	            'success': False
-	        }
-	    return HttpResponse(json.dumps(ret_data), mimetype="application/json")
+            ret_data = {'html': render_to_string(template, context).strip(), 'success': True}
+        else:
+            ret_data = {
+                'success': False
+            }
+            return HttpResponse(json.dumps(ret_data), mimetype="application/json")
     else:
         return render_to_response("follow/render_friend_list_all.html", {
             "friends": followers,
         })       
+
 
 def get_vendor_following(request, content_type_id, object_id):
     ctype = get_object_or_404(ContentType, pk=content_type_id)

@@ -1,10 +1,11 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models.fields.related import ManyToManyField, ForeignKey
 from .models import Follow
 from .registry import registry, model_map
 from actstream import action, actions
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.db import models
 
 
 def get_followers_for_object(instance):
@@ -97,7 +98,7 @@ def register(model, field_name=None, related_name=None, lookup_method_name='get_
         related_name = 'follow_%s' % model._meta.module_name
 
     field = ForeignKey(model, related_name=related_name, null=True,
-        blank=True, db_index=True)
+        blank=True, db_index=True, on_delete=models.CASCADE, )
 
     field.contribute_to_class(Follow, field_name)
     setattr(model, lookup_method_name, get_followers_for_object)

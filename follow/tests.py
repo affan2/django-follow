@@ -1,6 +1,6 @@
 from django import template
 from django.contrib.auth.models import User, AnonymousUser, Group
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test import TestCase
 from follow import signals, utils
 from .models import Follow
@@ -8,6 +8,7 @@ from .utils import register
 
 register(User)
 register(Group)
+
 
 class FollowTest(TestCase):
     urls = 'follow.urls'

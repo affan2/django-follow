@@ -1,5 +1,5 @@
 from django import template
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
 
 from follow.models import Follow
@@ -87,8 +87,7 @@ class FollowFormNode(template.Node):
 
     def render(self, context):
         ctx = {'object': self.obj.resolve(context)}
-        return template.loader.render_to_string(self.template, ctx,
-            context_instance=context)
+        return template.loader.render_to_string(self.template, ctx)
 
 class FollowingList(template.Node):
     def __init__(self, obj):

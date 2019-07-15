@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.db.models.loading import cache
+from django.core.cache import cache
 from django.http import HttpResponse, HttpResponseRedirect, \
     HttpResponseServerError, HttpResponseBadRequest
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.conf import settings
 from django.template.loader import render_to_string
 
@@ -12,7 +12,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 from mezzanine.blog.models import BlogPost
-from django.utils import simplejson
+import json
 from follow.models import Follow
 
 import json
@@ -30,8 +30,7 @@ def check(func):
                 count = Follow.objects.get_follows(follow.target).count()
             else:
                 count = Follow.objects.get_follows(follow).count()
-            return HttpResponse(simplejson.dumps(dict(success=True,
-                                                          count=count)))              
+            return HttpResponse(json.dumps(dict(success=True, count=count)))
         try:
             if 'next' in request.GET:
                 return HttpResponseRedirect(request.GET.get('next'))
@@ -73,13 +72,12 @@ def get_vendor_followers(request, content_type_id, object_id):
     ctype = get_object_or_404(ContentType, pk=content_type_id)
     obj = get_object_or_404(ctype.model_class(), pk=object_id)
     if request.is_ajax():
-        return render_to_response("follow/friend_list_all.html", {
-            "friends": utils.get_follower_users_for_vendor(obj),
-        }, context_instance=RequestContext(request))
+        return render_to_response("follow/friend_list_all.html",
+                                  {"friends": utils.get_follower_users_for_vendor(obj), })
     else:
         return render_to_response("follow/render_friend_list_all.html", {
             "friends": utils.get_follower_users_for_vendor(obj),
-        }, context_instance=RequestContext(request))
+        })
 
 def get_vendor_followers_subset(request, content_type_id, object_id, sIndex, lIndex):
     ctype = get_object_or_404(ContentType, pk=content_type_id)
@@ -100,33 +98,26 @@ def get_vendor_followers_subset(request, content_type_id, object_id, sIndex, lIn
             'is_incremental': False,
             'data_href':data_href,
             'data_chunk':settings.MIN_FOLLOWERS_CHUNK
-        }, context_instance=RequestContext(request))
-
-    
+        })
 
     if request.is_ajax():
-	    context = RequestContext(request)
-
-	    context.update({'friends': followers,
+        context = RequestContext(request)
+        context.update({'friends': followers,
 	                    'is_incremental': True})
-
-	    template = 'follow/friend_list_all.html'
-	    if followers:
+        template = 'follow/friend_list_all.html'
+        if followers:
 	        ret_data = {
-	            'html': render_to_string(template, context_instance=context).strip(),
-	            'success': True
-	        }
+	            'html': render_to_string(template, context).strip(),
+	            'success': True}
 	    else:
 	        ret_data = {
 	            'success': False
 	        }
-
 	    return HttpResponse(json.dumps(ret_data), mimetype="application/json")
-
     else:
         return render_to_response("follow/render_friend_list_all.html", {
             "friends": followers,
-        }, context_instance=RequestContext(request))       
+        })       
 
 def get_vendor_following(request, content_type_id, object_id):
     ctype = get_object_or_404(ContentType, pk=content_type_id)
@@ -134,11 +125,11 @@ def get_vendor_following(request, content_type_id, object_id):
     if request.is_ajax():
         return render_to_response("follow/vendor_following.html", {
             "vendors": utils.get_following_vendors_for_user(user),
-        }, context_instance=RequestContext(request))
+        })
     else:
         return render_to_response("follow/render_vendor_following.html", {
             "vendors": utils.get_following_vendors_for_user(user),
-        }, context_instance=RequestContext(request))       
+        })       
 
 def get_vendor_following_subset(request, content_type_id, object_id, sIndex, lIndex):
     ctype = get_object_or_404(ContentType, pk=content_type_id)
@@ -163,7 +154,7 @@ def get_vendor_following_subset(request, content_type_id, object_id, sIndex, lIn
             "vendors": vendors,
             'is_incremental': False,
             'data_href':data_href
-        }, context_instance=RequestContext(request))
+        })
 
     
 
@@ -176,7 +167,7 @@ def get_vendor_following_subset(request, content_type_id, object_id, sIndex, lIn
 
         if vendors:
             ret_data = {
-                'html': render_to_string(template, context_instance=context).strip(),
+                'html': render_to_string(template, context).strip(),
                 'success': True
             }
         else:
@@ -189,4 +180,4 @@ def get_vendor_following_subset(request, content_type_id, object_id, sIndex, lIn
     else:
         return render_to_response("follow/render_vendor_following.html", {
             "vendors": vendors
-        }, context_instance=RequestContext(request))        
+        })        

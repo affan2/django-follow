@@ -6,6 +6,9 @@ from follow.models import Follow
 from follow import utils
 import re
 
+from django.template import loader, RequestContext
+from django.conf import settings
+
 register = template.Library()
 
 @register.tag
@@ -194,6 +197,30 @@ def vendor_following_subset_info_url(parser, token):
                                   "{% vendor_following_subset_info_url [actor_instance] %}")
     else:
         return UserFollowingVendorsListSubset.handle_token(parser, token)
+
+@register.simple_tag(takes_context=True)
+def render_vendor_following_subset(context, user_obj, sIndex, lIndex, data_chunk=settings.MIN_FOLLOWERS_CHUNK, orientation='horizontal', user_list = 'false'):
+    vendors = utils.get_following_vendors_subset_for_user(user_obj, sIndex, lIndex)
+    template_name = 'generic/vendor_list.html'
+    search_param = ''
+
+    if orientation == 'vertical':
+        template_name = 'generic/vendor_list_v.html'
+        search_param = '?v=1'
+    template = loader.get_template(template_name)
+    content_type = ContentType.objects.get_for_model(user_obj).pk
+    data_href = reverse('get_vendor_following_subset', kwargs={ 'content_type_id':content_type,
+                                                            'object_id':user_obj.pk,
+                                                            'sIndex':sIndex,
+                                                            'lIndex':lIndex})
+    return template.render(RequestContext(context['request'], {
+            "vendors": vendors,
+            'is_incremental': False,
+            'data_href':data_href + search_param,
+            'data_chunk': data_chunk,
+            'user_list': user_list,
+            'profile_user': user_obj
+        }))
 
 @register.tag
 def vendor_following_info_url(parser, token):

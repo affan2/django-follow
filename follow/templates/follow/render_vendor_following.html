@@ -1,33 +1,36 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% load thumbnail %}
 {% load follow_tags %}
 {#% block title %}{% trans "vendors" %}{% endblock %#}
 
-{% block content %}
+{% block main %}
 
-<table>
-{% for vendor in vendors %}
-    <tr>
-    <td>
-       {% include 'actstream/render_actor.html' with actor=vendor %}
-    </td>
-    <td>
-      <a href='{{vendor.get_absolute_url}}'>{{ vendor }}</a>  
-    </td>
-        <td>
-        <div  class="follow-button-container action-follow-user {% if request.user|is_following:vendor %}following{% endif %}" style="position:relative;right:-50px;">
-        <a href="{% follow_url vendor %}" class="follow-btn form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow" data-id="vendor_followers">{% trans "Follow" %}</a>
-
-        <a class="form-button form-button-following form-button-small form-button-light-and-grey form-button-left-icon form-button-icon-following" data-id="vendor_followers">{% trans "Following" %}</a>
-        
-        <a href="{% follow_url vendor %}" class="unfollow-btn form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow" data-id="vendor_followers" >{% trans "Unfollow" %}</a>
-        </div> 
-        </td>
-
-    </tr>
-{% endfor %}
-</table>
+<div class="row topHalfGutter color5D">
+    <div class="span7">
+        {% for vendor in vendors %}
+            <div class="row vendorResult bottomHalfGutter{% if forloop.first %} topHalfGutter{% endif %}">
+                {% include 'generic/includes/render_owner.html' with owner=vendor %}
+                <div class="span1 noGutter">
+                    <a class="fontHelvetica radioColor fontSize13" href='{{vendor.get_absolute_url}}'>{{ vendor }}</a>  
+                </div>
+                <div class="span1 halfGutter">
+                    <span class="vendorFollowContainer pagination-centered {% if request.user|is_following:vendor %}following{% endif %}" >
+                        <button class="follow-btn makeYellowButton icon-follow" data-href="{% follow_url vendor %}">{% trans "Follow" %}</button>
+                        <button class="icon-following makeYellowButton radioColor"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Following" %}</button>
+                        <button class="unfollow-btn makeYellowButton icon-unfollow radioColor" data-href="{% follow_url vendor %}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Unfollow" %}</button>
+                    </span>
+                </div>
+            </div>
+            {% empty %}
+            <div class="row vendorResult">
+                <div class="span2">
+                    {% trans "No stores to list" %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 
 
 {% endblock %}

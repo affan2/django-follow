@@ -38,7 +38,7 @@ def get_following_vendors_subset_for_user(user, sIndex, lIndex):
     Returns all the users who follow objects associated with a certain model, object or queryset.
     """
     vendors = []
-    followObjects = Follow.objects.all().filter(user=user, target_blogpost__in=blog.models.BlogPost.objects.all())[sIndex:lIndex]
+    followObjects = Follow.objects.all().filter(user=user, target_blogpost__in=blog.models.BlogPost.objects.published())[sIndex:lIndex]
     for followObject in followObjects:
         if isinstance(followObject._get_target(), blog.models.BlogPost):
             if followObject._get_target() is not None:
@@ -78,7 +78,7 @@ def get_following_vendors_count_for_user(user):
     """
     Returns all the Follow objects associated with a user.
     """
-    return Follow.objects.all().filter(user=user, target_blogpost__in=blog.models.BlogPost.objects.all()).count()
+    return Follow.objects.all().filter(user=user, target_blogpost__in=blog.models.BlogPost.objects.published()).count()
 
 def register(model, field_name=None, related_name=None, lookup_method_name='get_follows'):
     """

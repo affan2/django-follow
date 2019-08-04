@@ -2,7 +2,8 @@ from django.urls import reverse
 from django.db.models.fields.related import ManyToManyField, ForeignKey
 from .models import Follow
 from .registry import registry, model_map
-##from actstream import action, actions
+from actstream.models import Action
+from actstream.views import actions
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.db import models
@@ -15,7 +16,7 @@ def get_followers_for_object(instance):
     return Follow.objects.get_follows(instance)
 
 
-def get_following_vendors_for_user(user, target_field):
+def get_following_vendors_for_user(user, target_field=None):
     """
     Returns all the users who follow objects associated with a certain model, object or queryset.
     """

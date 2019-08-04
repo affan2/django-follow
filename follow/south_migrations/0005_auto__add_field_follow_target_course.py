@@ -9,18 +9,18 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding field 'Follow.target_course'
-        db.add_column(u'follow_follow', 'target_course',
+        db.add_column('follow_follow', 'target_course',
                       self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='follow_course', null=True, to=orm['learning_system.Course']),
                       keep_default=False)
 
 
     def backwards(self, orm):
         # Deleting field 'Follow.target_course'
-        db.delete_column(u'follow_follow', 'target_course_id')
+        db.delete_column('follow_follow', 'target_course_id')
 
 
     models = {
-        u'actstream.action': {
+        'actstream.action': {
             'Meta': {'ordering': "('-timestamp',)", 'object_name': 'Action'},
             'action_object_content_type': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'action_object'", 'null': 'True', 'to': u"orm['contenttypes.ContentType']"}),
             'action_object_object_id': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
@@ -28,7 +28,7 @@ class Migration(SchemaMigration):
             'actor_object_id': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'batch_time_minutes': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_batchable': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
@@ -38,7 +38,7 @@ class Migration(SchemaMigration):
             'timestamp_date': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime.now'}),
             'verb': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
-        u'articles.article': {
+        'articles.article': {
             'Meta': {'ordering': "('-publish_up',)", 'unique_together': '()', 'object_name': 'Article', 'index_together': '()'},
             'access': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
@@ -50,7 +50,7 @@ class Migration(SchemaMigration):
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'article_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
             'documents': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'document_list'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['articles.Document']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'images': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'image_list'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['articles.Image']"}),
             'publish_down': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'publish_up': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2016, 10, 10, 0, 0)'}),
@@ -64,56 +64,56 @@ class Migration(SchemaMigration):
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'article_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"}),
             'videos': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'video_list'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['articles.Video']"})
         },
-        u'articles.articlerelated': {
+        'articles.articlerelated': {
             'Meta': {'ordering': "['from_content', 'order']", 'unique_together': "(('from_content', 'to_content'),)", 'object_name': 'ArticleRelated', 'db_table': "'articles_article_related'"},
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'articlerelated_created_by'", 'to': u"orm['auth.User']"}),
             'from_content': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'from_content'", 'to': u"orm['articles.Article']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'order': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1', 'db_index': 'True'}),
             'to_content': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'to_content'", 'to': u"orm['articles.Article']"}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'articlerelated_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'articles.articletopic': {
+        'articles.articletopic': {
             'Meta': {'object_name': 'ArticleTopic', 'db_table': "'articles_article_topic'"},
             'content_object': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['articles.Article']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'topic_article_items'", 'to': "orm['articles.Topics']"})
         },
-        u'articles.companyrelated': {
+        'articles.companyrelated': {
             'Meta': {'unique_together': "(('article', 'company'),)", 'object_name': 'CompanyRelated', 'db_table': "'articles_article_relatedcompanies'"},
             'article': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['articles.Article']"}),
             'company': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'articlecompanyrelated'", 'to': u"orm['companies.Company']"}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'articlecompanyrelated_created_by'", 'to': u"orm['auth.User']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'articlecompanyrelated_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'articles.document': {
-            'Meta': {'ordering': "['order']", 'object_name': 'Document', '_ormbases': [u'articles.Resource']},
-            u'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['articles.Resource']", 'unique': 'True', 'primary_key': 'True'})
+        'articles.document': {
+            'Meta': {'ordering': "['order']", 'object_name': 'Document', '_ormbases': ['articles.Resource']},
+            'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['articles.Resource']", 'unique': 'True', 'primary_key': 'True'})
         },
-        u'articles.image': {
-            'Meta': {'ordering': "['order']", 'object_name': 'Image', '_ormbases': [u'articles.Resource']},
-            u'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['articles.Resource']", 'unique': 'True', 'primary_key': 'True'})
+        'articles.image': {
+            'Meta': {'ordering': "['order']", 'object_name': 'Image', '_ormbases': ['articles.Resource']},
+            'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['articles.Resource']", 'unique': 'True', 'primary_key': 'True'})
         },
-        u'articles.resource': {
+        'articles.resource': {
             'Meta': {'ordering': "['article', 'order']", 'unique_together': "(('article', 'resource_type', 'resource_file'),)", 'object_name': 'Resource'},
             'article': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['articles.Article']"}),
             'caption': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'resource_created_by'", 'to': u"orm['auth.User']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'order': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1', 'db_index': 'True'}),
             'resource_file': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['filer.File']"}),
             'resource_type': ('django.db.models.fields.SmallIntegerField', [], {'default': '3'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'resource_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'articles.section': {
+        'articles.section': {
             'Meta': {'unique_together': '()', 'object_name': 'Section', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'article_form_document': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -123,7 +123,7 @@ class Migration(SchemaMigration):
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'section_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'on_news_nav': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'on_resources_nav': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'page': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'section_page'", 'null': 'True', 'to': u"orm['pages.Page']"}),
@@ -133,10 +133,10 @@ class Migration(SchemaMigration):
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'section_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'articles.sectiontopic': {
+        'articles.sectiontopic': {
             'Meta': {'object_name': 'SectionTopic', 'db_table': "'articles_section_topic'"},
             'content_object': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['articles.Section']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'topic_section_items'", 'to': "orm['articles.Topics']"})
         },
         'articles.topics': {
@@ -145,38 +145,38 @@ class Migration(SchemaMigration):
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'related_name': "'articles_topics_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
             'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'on_nav': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'articles_topics_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'articles.video': {
-            'Meta': {'ordering': "['order']", 'object_name': 'Video', '_ormbases': [u'articles.Resource']},
+        'articles.video': {
+            'Meta': {'ordering': "['order']", 'object_name': 'Video', '_ormbases': ['articles.Resource']},
             'resource_external': ('embed_video.fields.EmbedVideoField', [], {'max_length': '200'}),
-            u'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['articles.Resource']", 'unique': 'True', 'primary_key': 'True'})
+            'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['articles.Resource']", 'unique': 'True', 'primary_key': 'True'})
         },
-        u'auth.group': {
+        'auth.group': {
             'Meta': {'object_name': 'Group'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
             'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
         },
-        u'auth.permission': {
-            'Meta': {'ordering': "(u'content_type__app_label', u'content_type__model', u'codename')", 'unique_together': "((u'content_type', u'codename'),)", 'object_name': 'Permission'},
+        'auth.permission': {
+            'Meta': {'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission'},
             'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
-        u'auth.user': {
+        'auth.user': {
             'Meta': {'object_name': 'User'},
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -187,7 +187,7 @@ class Migration(SchemaMigration):
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
-        u'cities_light.city': {
+        'cities_light.city': {
             'Meta': {'unique_together': "(('region', 'slug'),)", 'object_name': 'City', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'alternate_names': ('django.db.models.fields.TextField', [], {'default': "''", 'null': 'True', 'blank': 'True'}),
@@ -195,7 +195,7 @@ class Migration(SchemaMigration):
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
             'feature_code': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '10', 'null': 'True', 'blank': 'True'}),
             'geoname_id': ('django.db.models.fields.IntegerField', [], {'unique': 'True', 'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'latitude': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '8', 'decimal_places': '5', 'blank': 'True'}),
             'longitude': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '8', 'decimal_places': '5', 'blank': 'True'}),
             'name_ascii': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'blank': 'True'}),
@@ -205,7 +205,7 @@ class Migration(SchemaMigration):
             'slug': ('autoslug.fields.AutoSlugField', [], {'unique_with': '()', 'max_length': '50', 'populate_from': "'name_ascii'"}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'})
         },
-        u'cities_light.country': {
+        'cities_light.country': {
             'Meta': {'unique_together': '()', 'object_name': 'Country', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'alternate_names': ('django.db.models.fields.TextField', [], {'default': "''", 'null': 'True', 'blank': 'True'}),
@@ -214,14 +214,14 @@ class Migration(SchemaMigration):
             'continent': ('django.db.models.fields.CharField', [], {'max_length': '2', 'db_index': 'True'}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
             'geoname_id': ('django.db.models.fields.IntegerField', [], {'unique': 'True', 'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name_ascii': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'blank': 'True'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '20', 'null': 'True'}),
             'slug': ('autoslug.fields.AutoSlugField', [], {'unique_with': '()', 'max_length': '50', 'populate_from': "'name_ascii'"}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'tld': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '5', 'blank': 'True'})
         },
-        u'cities_light.region': {
+        'cities_light.region': {
             'Meta': {'unique_together': "(('country', 'slug'),)", 'object_name': 'Region', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'alternate_names': ('django.db.models.fields.TextField', [], {'default': "''", 'null': 'True', 'blank': 'True'}),
@@ -229,73 +229,73 @@ class Migration(SchemaMigration):
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
             'geoname_code': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'geoname_id': ('django.db.models.fields.IntegerField', [], {'unique': 'True', 'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name_ascii': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'blank': 'True'}),
             'slug': ('autoslug.fields.AutoSlugField', [], {'unique_with': '()', 'max_length': '50', 'populate_from': "'name_ascii'"}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'})
         },
-        u'companies.bimcourses': {
+        'companies.bimcourses': {
             'Meta': {'unique_together': '()', 'object_name': 'BimCourses', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'related_name': "'bim_course_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'slug': ('autoslug.fields.AutoSlugField', [], {'unique': 'True', 'max_length': '100', 'populate_from': "'name'", 'unique_with': '()'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'topics': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'topics_bimcourses'", 'symmetrical': 'False', 'through': u"orm['companies.BimCoursesTopic']", 'to': "orm['articles.Topics']"}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'bim_course_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'companies.bimcoursestopic': {
+        'companies.bimcoursestopic': {
             'Meta': {'object_name': 'BimCoursesTopic'},
             'content_object': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['companies.BimCourses']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'companies_bimcoursestopic_items'", 'to': "orm['articles.Topics']"})
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'companies_bimcoursestopic_items'", 'to': "orm['articles.Topics']"})
         },
-        u'companies.bimcoursestype': {
+        'companies.bimcoursestype': {
             'Meta': {'unique_together': '()', 'object_name': 'BimCoursesType', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'related_name': "'bim_course_type_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'slug': ('autoslug.fields.AutoSlugField', [], {'unique': 'True', 'max_length': '100', 'populate_from': "'name'", 'unique_with': '()'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'topics': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'topics_bimcoursestype'", 'symmetrical': 'False', 'through': u"orm['companies.BimCoursesTypeTopic']", 'to': "orm['articles.Topics']"}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'bim_course_type_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'companies.bimcoursestypetopic': {
+        'companies.bimcoursestypetopic': {
             'Meta': {'object_name': 'BimCoursesTypeTopic'},
             'content_object': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['companies.BimCoursesType']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'companies_bimcoursestypetopic_items'", 'to': "orm['articles.Topics']"})
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'companies_bimcoursestypetopic_items'", 'to': "orm['articles.Topics']"})
         },
-        u'companies.bimcurriculum': {
+        'companies.bimcurriculum': {
             'Meta': {'unique_together': '()', 'object_name': 'BimCurriculum', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'related_name': "'bim_curriculum_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'slug': ('autoslug.fields.AutoSlugField', [], {'unique': 'True', 'max_length': '100', 'populate_from': "'name'", 'unique_with': '()'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'topics': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'topics_bimcurriculum'", 'symmetrical': 'False', 'through': u"orm['companies.BimCurriculumTopic']", 'to': "orm['articles.Topics']"}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'bim_curriculum_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'companies.bimcurriculumtopic': {
+        'companies.bimcurriculumtopic': {
             'Meta': {'object_name': 'BimCurriculumTopic'},
             'content_object': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['companies.BimCurriculum']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'companies_bimcurriculumtopic_items'", 'to': "orm['articles.Topics']"})
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'companies_bimcurriculumtopic_items'", 'to': "orm['articles.Topics']"})
         },
-        u'companies.brochure': {
-            'Meta': {'ordering': "['order']", 'object_name': 'Brochure', '_ormbases': [u'companies.Resource']},
-            u'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['companies.Resource']", 'unique': 'True', 'primary_key': 'True'})
+        'companies.brochure': {
+            'Meta': {'ordering': "['order']", 'object_name': 'Brochure', '_ormbases': ['companies.Resource']},
+            'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['companies.Resource']", 'unique': 'True', 'primary_key': 'True'})
         },
-        u'companies.certification': {
+        'companies.certification': {
             'Meta': {'object_name': 'Certification'},
             'certifier': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'certifying_authority'", 'to': u"orm['companies.Company']"}),
             'code': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
@@ -304,7 +304,7 @@ class Migration(SchemaMigration):
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'related_name': "'certificate_created_by'", 'to': u"orm['auth.User']"}),
             'expiry': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'from_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '2'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'to_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
@@ -312,7 +312,7 @@ class Migration(SchemaMigration):
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'certificate_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         },
-        u'companies.company': {
+        'companies.company': {
             'Meta': {'unique_together': '()', 'object_name': 'Company', 'index_together': '()'},
             'admin_primary': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'company_admin_primary'", 'null': 'True', 'to': u"orm['auth.User']"}),
             'admins': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'company_admin_list'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['auth.User']"}),
@@ -332,7 +332,7 @@ class Migration(SchemaMigration):
             'employees_count': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'fax': ('phonenumber_field.modelfields.PhoneNumberField', [], {'max_length': '128', 'null': 'True', 'blank': 'True'}),
             'featured_home': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'images': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'company_image_list'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['companies.Image']"}),
             'logo': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['filer.Image']", 'null': 'True', 'blank': 'True'}),
             'membership_certificates_flag': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
@@ -353,235 +353,235 @@ class Migration(SchemaMigration):
             'website': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'year_founded': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'})
         },
-        u'companies.companyrelated': {
+        'companies.companyrelated': {
             'Meta': {'ordering': "['from_company', 'relation']", 'unique_together': "(('from_company', 'to_company', 'relation'),)", 'object_name': 'CompanyRelated', 'db_table': "'company_company_related'"},
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'companyrelated_created_by'", 'to': u"orm['auth.User']"}),
             'from_company': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'from_company'", 'to': u"orm['companies.Company']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'relation': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'to_company': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'to_company'", 'to': u"orm['companies.Company']"}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'companyrelated_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'companies.companytype': {
+        'companies.companytype': {
             'Meta': {'unique_together': '()', 'object_name': 'CompanyType', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'company_form_type': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'companytype_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            u'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            u'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'parent': ('mptt.fields.TreeForeignKey', [], {'blank': 'True', 'related_name': "'topic_children'", 'null': 'True', 'to': u"orm['companies.CompanyType']"}),
-            u'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'topics': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'topics_companytype'", 'blank': 'True', 'through': u"orm['companies.CompanyTypeTopic']", 'to': "orm['articles.Topics']"}),
-            u'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'companytype_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'companies.companytypetopic': {
+        'companies.companytypetopic': {
             'Meta': {'object_name': 'CompanyTypeTopic'},
             'content_object': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['companies.CompanyType']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'companies_companytypetopic_items'", 'to': "orm['articles.Topics']"})
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'companies_companytypetopic_items'", 'to': "orm['articles.Topics']"})
         },
-        u'companies.image': {
-            'Meta': {'ordering': "['order']", 'object_name': 'Image', '_ormbases': [u'companies.Resource']},
-            u'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['companies.Resource']", 'unique': 'True', 'primary_key': 'True'})
+        'companies.image': {
+            'Meta': {'ordering': "['order']", 'object_name': 'Image', '_ormbases': ['companies.Resource']},
+            'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['companies.Resource']", 'unique': 'True', 'primary_key': 'True'})
         },
-        u'companies.operationareas': {
+        'companies.operationareas': {
             'Meta': {'unique_together': '()', 'object_name': 'OperationAreas', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'countries': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'operation_areas_country_list'", 'symmetrical': 'False', 'to': u"orm['cities_light.Country']"}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'related_name': "'operationareas_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            u'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            u'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'parent': ('mptt.fields.TreeForeignKey', [], {'blank': 'True', 'related_name': "'OperationAreas_children'", 'null': 'True', 'to': u"orm['companies.OperationAreas']"}),
-            u'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'slug': ('autoslug.fields.AutoSlugField', [], {'unique': 'True', 'max_length': '100', 'populate_from': "'name'", 'unique_with': '()'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
-            u'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'operationareas_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'companies.products': {
+        'companies.products': {
             'Meta': {'unique_together': '()', 'object_name': 'Products', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'related_name': "'product_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'slug': ('autoslug.fields.AutoSlugField', [], {'unique': 'True', 'max_length': '100', 'populate_from': "'name'", 'unique_with': '()'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'topics': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'topics_products'", 'symmetrical': 'False', 'through': u"orm['companies.ProductsTopic']", 'to': "orm['articles.Topics']"}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'product_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'companies.productstopic': {
+        'companies.productstopic': {
             'Meta': {'object_name': 'ProductsTopic'},
             'content_object': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['companies.Products']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'companies_productstopic_items'", 'to': "orm['articles.Topics']"})
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'companies_productstopic_items'", 'to': "orm['articles.Topics']"})
         },
-        u'companies.resource': {
+        'companies.resource': {
             'Meta': {'ordering': "['company', 'order']", 'unique_together': "(('company', 'resource_type', 'resource_file'),)", 'object_name': 'Resource'},
             'caption': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'company': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['companies.Company']"}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'company_resource_created_by'", 'to': u"orm['auth.User']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'order': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1', 'db_index': 'True'}),
             'resource_file': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'company_resource_file'", 'to': u"orm['filer.File']"}),
             'resource_type': ('django.db.models.fields.SmallIntegerField', [], {'default': '3'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'company_resource_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'companies.sectors': {
+        'companies.sectors': {
             'Meta': {'unique_together': '()', 'object_name': 'Sectors', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'related_name': "'sector_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            u'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            u'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'parent': ('mptt.fields.TreeForeignKey', [], {'blank': 'True', 'related_name': "'sector_children'", 'null': 'True', 'to': u"orm['companies.Sectors']"}),
-            u'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'slug': ('autoslug.fields.AutoSlugField', [], {'unique': 'True', 'max_length': '100', 'populate_from': "'name'", 'unique_with': '()'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'topics': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'topics_sectors'", 'blank': 'True', 'through': u"orm['companies.SectorsTopic']", 'to': "orm['articles.Topics']"}),
-            u'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'sector_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'companies.sectorstopic': {
+        'companies.sectorstopic': {
             'Meta': {'object_name': 'SectorsTopic'},
             'content_object': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['companies.Sectors']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'companies_sectorstopic_items'", 'to': "orm['articles.Topics']"})
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'companies_sectorstopic_items'", 'to': "orm['articles.Topics']"})
         },
-        u'companies.services': {
+        'companies.services': {
             'Meta': {'unique_together': '()', 'object_name': 'Services', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'related_name': "'service_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'slug': ('autoslug.fields.AutoSlugField', [], {'unique': 'True', 'max_length': '100', 'populate_from': "'name'", 'unique_with': '()'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'topics': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'topics_services'", 'symmetrical': 'False', 'through': u"orm['companies.ServicesTopic']", 'to': "orm['articles.Topics']"}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'service_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'companies.servicestopic': {
+        'companies.servicestopic': {
             'Meta': {'object_name': 'ServicesTopic'},
             'content_object': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['companies.Services']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'companies_servicestopic_items'", 'to': "orm['articles.Topics']"})
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'companies_servicestopic_items'", 'to': "orm['articles.Topics']"})
         },
-        u'companies.video': {
-            'Meta': {'ordering': "['order']", 'object_name': 'Video', '_ormbases': [u'companies.Resource']},
+        'companies.video': {
+            'Meta': {'ordering': "['order']", 'object_name': 'Video', '_ormbases': ['companies.Resource']},
             'resource_external': ('embed_video.fields.EmbedVideoField', [], {'max_length': '200'}),
-            u'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['companies.Resource']", 'unique': 'True', 'primary_key': 'True'})
+            'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['companies.Resource']", 'unique': 'True', 'primary_key': 'True'})
         },
-        u'contenttypes.contenttype': {
+        'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
             'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'events.eventindustry': {
+        'events.eventindustry': {
             'Meta': {'unique_together': '()', 'object_name': 'EventIndustry', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'eventindustry_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            u'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            u'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'parent': ('mptt.fields.TreeForeignKey', [], {'blank': 'True', 'related_name': "'eventindustry_children'", 'null': 'True', 'to': u"orm['events.EventIndustry']"}),
-            u'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'topics': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'topics_eventindustry'", 'blank': 'True', 'through': u"orm['events.EventIndustryTopic']", 'to': "orm['articles.Topics']"}),
-            u'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'eventindustry_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'events.eventindustrytopic': {
+        'events.eventindustrytopic': {
             'Meta': {'object_name': 'EventIndustryTopic'},
             'content_object': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['events.EventIndustry']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'events_eventindustrytopic_items'", 'to': "orm['articles.Topics']"})
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'events_eventindustrytopic_items'", 'to': "orm['articles.Topics']"})
         },
-        u'filer.file': {
+        'filer.file': {
             'Meta': {'object_name': 'File'},
             '_file_size': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'file': ('django.db.models.fields.files.FileField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'folder': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'all_files'", 'null': 'True', 'to': u"orm['filer.Folder']"}),
+            'folder': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'all_files'", 'null': 'True', 'to': u"orm['filer.Folder']"}),
             'has_all_mandatory_data': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'modified_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'default': "u''", 'max_length': '255', 'blank': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
             'original_filename': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'owner': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'owned_files'", 'null': 'True', 'to': u"orm['auth.User']"}),
-            'polymorphic_ctype': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'polymorphic_filer.file_set+'", 'null': 'True', 'to': u"orm['contenttypes.ContentType']"}),
-            'sha1': ('django.db.models.fields.CharField', [], {'default': "u''", 'max_length': '40', 'blank': 'True'}),
+            'owner': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'owned_files'", 'null': 'True', 'to': u"orm['auth.User']"}),
+            'polymorphic_ctype': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'polymorphic_filer.file_set+'", 'null': 'True', 'to': u"orm['contenttypes.ContentType']"}),
+            'sha1': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '40', 'blank': 'True'}),
             'uploaded_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'})
         },
-        u'filer.folder': {
-            'Meta': {'ordering': "(u'name',)", 'unique_together': "((u'parent', u'name'),)", 'object_name': 'Folder'},
+        'filer.folder': {
+            'Meta': {'ordering': "('name',)", 'unique_together': "(('parent', 'name'),)", 'object_name': 'Folder'},
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            u'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            u'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'modified_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'owner': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'filer_owned_folders'", 'null': 'True', 'to': u"orm['auth.User']"}),
-            'parent': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'children'", 'null': 'True', 'to': u"orm['filer.Folder']"}),
-            u'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            u'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'owner': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'filer_owned_folders'", 'null': 'True', 'to': u"orm['auth.User']"}),
+            'parent': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'children'", 'null': 'True', 'to': u"orm['filer.Folder']"}),
+            'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'uploaded_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'})
         },
         'filer.image': {
-            'Meta': {'object_name': 'Image', '_ormbases': [u'filer.File']},
+            'Meta': {'object_name': 'Image', '_ormbases': ['filer.File']},
             '_height': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             '_width': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'author': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'date_taken': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'default_alt_text': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'default_caption': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            u'file_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['filer.File']", 'unique': 'True', 'primary_key': 'True'}),
+            'file_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['filer.File']", 'unique': 'True', 'primary_key': 'True'}),
             'must_always_publish_author_credit': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'must_always_publish_copyright': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'subject_location': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '64', 'null': 'True', 'blank': 'True'})
         },
-        u'flaggit.flag': {
+        'flaggit.flag': {
             'Meta': {'object_name': 'Flag'},
             'comment': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'reviewed': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'reviewer': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'null': 'True', 'blank': 'True'}),
             'status': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1'})
         },
-        u'follow.follow': {
+        'follow.follow': {
             'Meta': {'object_name': 'Follow'},
             'datetime': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'target_article': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'follow_article'", 'null': 'True', 'to': u"orm['articles.Article']"}),
             'target_company': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'follow_company'", 'null': 'True', 'to': u"orm['companies.Company']"}),
             'target_course': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'follow_course'", 'null': 'True', 'to': u"orm['learning_system.Course']"}),
@@ -591,7 +591,7 @@ class Migration(SchemaMigration):
             'target_user': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'follow_user'", 'null': 'True', 'to': u"orm['auth.User']"}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'following'", 'to': u"orm['auth.User']"})
         },
-        u'groups.group': {
+        'groups.group': {
             'Meta': {'ordering': "['title']", 'object_name': 'Group'},
             'approved': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'approved_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'group_approved_by'", 'null': 'True', 'to': u"orm['auth.User']"}),
@@ -599,13 +599,13 @@ class Migration(SchemaMigration):
             'company': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['companies.Company']", 'null': 'True', 'blank': 'True'}),
             'country': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['cities_light.Country']", 'null': 'True', 'blank': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'groups_group_created_by'", 'to': u"orm['auth.User']"}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'groups_group_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
             'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'excerpt': ('django.db.models.fields.TextField', [], {}),
             'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'group_type': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'industry': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['events.EventIndustry']"}),
             'location': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'logo': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['filer.Image']", 'null': 'True', 'blank': 'True'}),
@@ -617,16 +617,16 @@ class Migration(SchemaMigration):
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'topics': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['articles.Topics']", 'through': u"orm['groups.GroupTopic']", 'symmetrical': 'False'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'groups_group_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"}),
+            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'groups_group_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"}),
             'website': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         },
-        u'groups.grouptopic': {
+        'groups.grouptopic': {
             'Meta': {'object_name': 'GroupTopic'},
             'content_object': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['groups.Group']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'topic_group_items'", 'to': "orm['articles.Topics']"})
         },
-        u'jobs.job': {
+        'jobs.job': {
             'Meta': {'ordering': "('-publish_up',)", 'unique_together': '()', 'object_name': 'Job', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'application_link': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
@@ -639,7 +639,7 @@ class Migration(SchemaMigration):
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
             'employment_type': ('django.db.models.fields.SmallIntegerField', [], {}),
             'experience_level': ('django.db.models.fields.SmallIntegerField', [], {}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'job_function': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'job_function_list'", 'symmetrical': 'False', 'to': u"orm['jobs.JobFunction']"}),
             'job_industry': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'job_industry_list'", 'symmetrical': 'False', 'to': u"orm['companies.CompanyType']"}),
             'publish_down': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2016, 11, 9, 0, 0)'}),
@@ -650,32 +650,32 @@ class Migration(SchemaMigration):
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'job_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'jobs.jobfunction': {
+        'jobs.jobfunction': {
             'Meta': {'unique_together': '()', 'object_name': 'JobFunction', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'job_function_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'job_function_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'jobs.userskillsitem': {
+        'jobs.userskillsitem': {
             'Meta': {'object_name': 'UserSkillsItem'},
             'content_object': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['jobs.Job']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'jobs_userskillsitem_items'", 'to': "orm['people.UserSkills']"})
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'jobs_userskillsitem_items'", 'to': "orm['people.UserSkills']"})
         },
-        u'learning_system.course': {
+        'learning_system.course': {
             'Meta': {'unique_together': '()', 'object_name': 'Course', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'city': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['cities_light.City']", 'null': 'True', 'blank': 'True'}),
             'company': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['companies.Company']"}),
             'country': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['cities_light.Country']", 'null': 'True', 'blank': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'learning_system_course_created_by'", 'to': u"orm['auth.User']"}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'learning_system_course_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
             'documents': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'document_list'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['learning_system.Document']"}),
             'eligible_for': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['learning_system.EligibleFor']"}),
@@ -685,7 +685,7 @@ class Migration(SchemaMigration):
             'engagement_level': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['learning_system.EngagementLevel']"}),
             'format': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['learning_system.CourseFormat']"}),
             'frequency': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['learning_system.CourseFrequency']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'images': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'image_list'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['learning_system.Image']"}),
             'instructional_level': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['learning_system.InstructionalLevel']"}),
             'instructors': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'instructor_list'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['auth.User']"}),
@@ -700,133 +700,133 @@ class Migration(SchemaMigration):
             'timezone': ('timezone_field.fields.TimeZoneField', [], {}),
             'topics': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['articles.Topics']", 'through': u"orm['learning_system.CourseTopic']", 'symmetrical': 'False'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'learning_system_course_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"}),
+            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'learning_system_course_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"}),
             'videos': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'video_list'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['learning_system.Video']"}),
             'website': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         },
-        u'learning_system.courseformat': {
+        'learning_system.courseformat': {
             'Meta': {'unique_together': '()', 'object_name': 'CourseFormat', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'learning_system_courseformat_created_by'", 'to': u"orm['auth.User']"}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'learning_system_courseformat_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'publish_down': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'publish_up': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2016, 10, 10, 0, 0)'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '255'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'learning_system_courseformat_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
+            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'learning_system_courseformat_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'learning_system.coursefrequency': {
+        'learning_system.coursefrequency': {
             'Meta': {'unique_together': '()', 'object_name': 'CourseFrequency', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'learning_system_coursefrequency_created_by'", 'to': u"orm['auth.User']"}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'learning_system_coursefrequency_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'publish_down': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'publish_up': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2016, 10, 10, 0, 0)'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '255'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'learning_system_coursefrequency_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
+            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'learning_system_coursefrequency_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'learning_system.courselevel': {
+        'learning_system.courselevel': {
             'Meta': {'unique_together': '()', 'object_name': 'CourseLevel', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'learning_system_courselevel_created_by'", 'to': u"orm['auth.User']"}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'learning_system_courselevel_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'publish_down': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'publish_up': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2016, 10, 10, 0, 0)'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '255'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'learning_system_courselevel_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
+            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'learning_system_courselevel_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'learning_system.coursetopic': {
+        'learning_system.coursetopic': {
             'Meta': {'object_name': 'CourseTopic', 'db_table': "'course_topic'"},
             'content_object': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['learning_system.Course']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'learning_system_coursetopic_items'", 'to': "orm['articles.Topics']"})
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'learning_system_coursetopic_items'", 'to': "orm['articles.Topics']"})
         },
-        u'learning_system.document': {
-            'Meta': {'ordering': "['order']", 'object_name': 'Document', '_ormbases': [u'learning_system.Resource']},
+        'learning_system.document': {
+            'Meta': {'ordering': "['order']", 'object_name': 'Document', '_ormbases': ['learning_system.Resource']},
             'file_type': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'preview': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            u'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['learning_system.Resource']", 'unique': 'True', 'primary_key': 'True'})
+            'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['learning_system.Resource']", 'unique': 'True', 'primary_key': 'True'})
         },
-        u'learning_system.eligiblefor': {
+        'learning_system.eligiblefor': {
             'Meta': {'unique_together': '()', 'object_name': 'EligibleFor', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'learning_system_eligiblefor_created_by'", 'to': u"orm['auth.User']"}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'learning_system_eligiblefor_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'publish_down': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'publish_up': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2016, 10, 10, 0, 0)'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '255'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'learning_system_eligiblefor_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
+            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'learning_system_eligiblefor_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'learning_system.engagementlevel': {
+        'learning_system.engagementlevel': {
             'Meta': {'unique_together': '()', 'object_name': 'EngagementLevel', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'learning_system_engagementlevel_created_by'", 'to': u"orm['auth.User']"}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'learning_system_engagementlevel_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'publish_down': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'publish_up': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2016, 10, 10, 0, 0)'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '255'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'learning_system_engagementlevel_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
+            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'learning_system_engagementlevel_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'learning_system.image': {
-            'Meta': {'ordering': "['order']", 'object_name': 'Image', '_ormbases': [u'learning_system.Resource']},
-            u'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['learning_system.Resource']", 'unique': 'True', 'primary_key': 'True'})
+        'learning_system.image': {
+            'Meta': {'ordering': "['order']", 'object_name': 'Image', '_ormbases': ['learning_system.Resource']},
+            'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['learning_system.Resource']", 'unique': 'True', 'primary_key': 'True'})
         },
-        u'learning_system.instructionallevel': {
+        'learning_system.instructionallevel': {
             'Meta': {'unique_together': '()', 'object_name': 'InstructionalLevel', 'index_together': '()'},
             'allow_translate': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'learning_system_instructionallevel_created_by'", 'to': u"orm['auth.User']"}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'learning_system_instructionallevel_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'publish_down': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'publish_up': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2016, 10, 10, 0, 0)'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '255'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'learning_system_instructionallevel_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
+            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'learning_system_instructionallevel_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'learning_system.resource': {
+        'learning_system.resource': {
             'Meta': {'ordering': "['course', 'order']", 'unique_together': "(('course', 'resource_type', 'resource_file'),)", 'object_name': 'Resource'},
             'caption': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'course': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['learning_system.Course']"}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'course_resource_created_by'", 'to': u"orm['auth.User']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'order': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1', 'db_index': 'True'}),
             'resource_file': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'course_resource_file'", 'to': u"orm['filer.File']"}),
             'resource_type': ('django.db.models.fields.SmallIntegerField', [], {'default': '3'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'course_resource_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'learning_system.video': {
-            'Meta': {'ordering': "['order']", 'object_name': 'Video', '_ormbases': [u'learning_system.Resource']},
+        'learning_system.video': {
+            'Meta': {'ordering': "['order']", 'object_name': 'Video', '_ormbases': ['learning_system.Resource']},
             'resource_external': ('embed_video.fields.EmbedVideoField', [], {'max_length': '200'}),
-            u'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['learning_system.Resource']", 'unique': 'True', 'primary_key': 'True'})
+            'resource_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['learning_system.Resource']", 'unique': 'True', 'primary_key': 'True'})
         },
-        u'pages.page': {
+        'pages.page': {
             'Meta': {'ordering': "['title']", 'object_name': 'Page'},
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'page_created_by'", 'to': u"orm['auth.User']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
@@ -838,20 +838,20 @@ class Migration(SchemaMigration):
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'related_name': "'people_userskills_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100'}),
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'people_userskills_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'posts.post': {
+        'posts.post': {
             'Meta': {'object_name': 'Post'},
             'content': ('django.db.models.fields.TextField', [], {}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'posts_post_created_by'", 'to': u"orm['auth.User']"}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'posts_post_created_by'", 'to': u"orm['auth.User']"}),
             'default_language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '2'}),
             'group': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['groups.Group']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'post_type': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
             'publish_down': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'publish_up': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2016, 10, 10, 0, 0)'}),
@@ -859,28 +859,28 @@ class Migration(SchemaMigration):
             'state': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
             'topics': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['articles.Topics']", 'symmetrical': 'False', 'through': u"orm['posts.PostTopic']", 'blank': 'True'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'posts_post_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
+            'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'posts_post_updated_by'", 'null': 'True', 'to': u"orm['auth.User']"})
         },
-        u'posts.posttopic': {
+        'posts.posttopic': {
             'Meta': {'object_name': 'PostTopic'},
             'content_object': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['posts.Post']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'posts_posttopic_items'", 'to': "orm['articles.Topics']"})
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'posts_posttopic_items'", 'to': "orm['articles.Topics']"})
         },
-        u'relationships.relationship': {
+        'relationships.relationship': {
             'Meta': {'ordering': "('created',)", 'unique_together': "(('from_user', 'to_user', 'status', 'site'),)", 'object_name': 'Relationship'},
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'from_user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'from_users'", 'to': u"orm['auth.User']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'site': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'related_name': "'relationships'", 'to': u"orm['sites.Site']"}),
             'status': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['relationships.RelationshipStatus']"}),
             'to_user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'to_users'", 'to': u"orm['auth.User']"}),
             'weight': ('django.db.models.fields.FloatField', [], {'default': '1.0', 'null': 'True', 'blank': 'True'})
         },
-        u'relationships.relationshipstatus': {
+        'relationships.relationshipstatus': {
             'Meta': {'ordering': "('name',)", 'object_name': 'RelationshipStatus'},
             'from_slug': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'login_required': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'private': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -888,10 +888,10 @@ class Migration(SchemaMigration):
             'to_slug': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'verb': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'sites.site': {
+        'sites.site': {
             'Meta': {'ordering': "('domain',)", 'object_name': 'Site', 'db_table': "'django_site'"},
             'domain': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         }
     }

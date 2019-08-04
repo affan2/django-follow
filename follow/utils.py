@@ -2,7 +2,7 @@ from django.urls import reverse
 from django.db.models.fields.related import ManyToManyField, ForeignKey
 from .models import Follow
 from .registry import registry, model_map
-from actstream import action, actions
+##from actstream import action, actions
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.db import models
@@ -113,7 +113,7 @@ def follow(user, obj):
 def unfollow(user, obj):
     """ Make a user unfollow an object """
     from django.contrib.contenttypes.models import ContentType
-    from actstream.models import Action
+    ##from actstream.models import Action
     try:
         actions.unfollow(user, obj)
         follow = Follow.objects.get_follows(obj).filter(user=user)

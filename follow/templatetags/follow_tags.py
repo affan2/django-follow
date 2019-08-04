@@ -197,6 +197,7 @@ def vendor_following_subset_info_url(parser, token):
     else:
         return UserFollowingVendorsListSubset.handle_token(parser, token)
 
+
 @register.simple_tag(takes_context=True)
 def render_vendor_following_subset(context, user_obj, sIndex, lIndex, data_chunk=settings.MIN_FOLLOWERS_CHUNK, orientation='horizontal', user_list = 'false'):
     vendors = utils.get_following_vendors_subset_for_user(user_obj, sIndex, lIndex)

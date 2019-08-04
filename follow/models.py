@@ -91,7 +91,7 @@ class Follow(models.Model):
         return '%s' % self.target
 
     def _get_target(self):
-        for Model, (_, fname) in iter(model_map.items()):
+        for Model, (_, fname) in iter(list(model_map.items())):
             try:
                 if hasattr(self, fname) and getattr(self, fname):
                     return getattr(self, fname)
@@ -101,7 +101,7 @@ class Follow(models.Model):
                 return None
     
     def _set_target(self, obj):
-        for _, fname in model_map.values():
+        for _, fname in list(model_map.values()):
             setattr(self, fname, None)
         if obj is None:
             return

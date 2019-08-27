@@ -11,6 +11,7 @@ from django.conf import settings
 
 register = template.Library()
 
+
 @register.tag
 def follow_url(parser, token):
     """

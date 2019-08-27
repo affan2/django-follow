@@ -4,7 +4,6 @@ from .models import Follow
 from .registry import registry, model_map
 from actstream.models import Action
 from actstream.views import actions
-from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.db import models
 
@@ -48,6 +47,7 @@ def get_following_vendors_subset_for_user(user, sIndex, lIndex):
 
     return vendors
 
+
 def get_follower_users_for_object(instance):
     """
     Returns all the users who follow objects associated with a certain model, object or queryset.
@@ -58,6 +58,7 @@ def get_follower_users_for_object(instance):
         if followObject.user is not None:
             followers.append(followObject.user)
     return followers
+
 
 def get_follower_users_subset_for_vendor(instance, sIndex, lIndex):
     """
@@ -70,17 +71,20 @@ def get_follower_users_subset_for_vendor(instance, sIndex, lIndex):
             followers.append(followObject.user)
     return followers
 
+
 def get_follower_count_for_object(instance):
     """
     Returns number of all the users who follow objects associated with a certain model, object or queryset..
     """
     return Follow.objects.get_follows(instance).count()
 
+
 def get_following_vendors_count_for_user(user):
     """
     Returns all the Follow objects associated with a user.
     """
     return Follow.objects.all().filter(user=user, target_blogpost__in=blog.models.BlogPost.objects.published()).count()
+
 
 def register(model, field_name=None, related_name=None, lookup_method_name='get_follows'):
     """
@@ -93,10 +97,10 @@ def register(model, field_name=None, related_name=None, lookup_method_name='get_
     registry.append(model)
 
     if not field_name:
-        field_name = 'target_%s' % model._meta.module_name
+        field_name = 'target_%s' % model.Meta.__module__
 
     if not related_name:
-        related_name = 'follow_%s' % model._meta.module_name
+        related_name = 'follow_%s' % model.Meta.__module__
 
     field = ForeignKey(model, related_name=related_name, null=True,
         blank=True, db_index=True, on_delete=models.CASCADE, )
@@ -105,16 +109,18 @@ def register(model, field_name=None, related_name=None, lookup_method_name='get_
     setattr(model, lookup_method_name, get_followers_for_object)
     model_map[model] = [related_name, field_name]
 
+
 def follow(user, obj):
     """ Make a user follow an object """
     actions.follow(user, obj, actor_only=False)
     follow, created = Follow.objects.get_or_create(user, obj)
     return follow
 
+
 def unfollow(user, obj):
-    """ Make a user unfollow an object """
+    """ Make a user un-follow an object """
     from django.contrib.contenttypes.models import ContentType
-    ##from actstream.models import Action
+    # from actstream.models import Action
     try:
         actions.unfollow(user, obj)
         follow = Follow.objects.get_follows(obj).filter(user=user)
@@ -133,6 +139,7 @@ def unfollow(user, obj):
     except Follow.DoesNotExist:
         pass
 
+
 def toggle(user, obj):
     """ Toggles a follow status. Useful function if you don't want to perform follow
     checks but just toggle it on / off. """
@@ -144,11 +151,14 @@ def toggle(user, obj):
 def follow_link(object):
     return reverse('follow.views.toggle', args=[object._meta.app_label, object._meta.object_name.lower(), object.pk])
 
+
 def unfollow_link(object):
     return reverse('follow.views.toggle', args=[object._meta.app_label, object._meta.object_name.lower(), object.pk])
 
+
 def toggle_link(object):
     return reverse('follow.views.toggle', args=[object._meta.app_label, object._meta.object_name.lower(), object.pk])
+
 
 def follow_url(user, obj):
     """ Returns the right follow/unfollow url """

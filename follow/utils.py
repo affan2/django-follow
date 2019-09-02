@@ -97,13 +97,19 @@ def register(model, field_name=None, related_name=None, lookup_method_name='get_
     registry.append(model)
 
     if not field_name:
-        field_name = 'target_%s' % model.Meta.__module__
+        field_name = 'target_%s' % model.__name__.lower()
 
     if not related_name:
-        related_name = 'follow_%s' % model.Meta.__module__
+        related_name = 'follow_%s' % model.__name__.lower()
 
-    field = ForeignKey(model, related_name=related_name, null=True,
-        blank=True, db_index=True, on_delete=models.CASCADE, )
+    field = ForeignKey(
+        model,
+        related_name=related_name,
+        null=True,
+        blank=True,
+        db_index=True,
+        on_delete=models.CASCADE,
+    )
 
     field.contribute_to_class(Follow, field_name)
     setattr(model, lookup_method_name, get_followers_for_object)

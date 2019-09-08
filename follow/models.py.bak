@@ -1,14 +1,10 @@
-# from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.models import User, AnonymousUser
 from django.db import models
 from django.db.models.query import QuerySet
 from django.db.models.signals import post_save, post_delete
 from follow.registry import model_map
 from follow.signals import followed, unfollowed
 import inspect
-from django.contrib.auth import get_user_model
-from django.contrib.auth.models import AnonymousUser
-from django.conf import settings
-
 
 class FollowManager(models.Manager):
     def fname(self, model_or_obj_or_qs):
@@ -21,18 +17,18 @@ class FollowManager(models.Manager):
             cls = model_or_obj_or_qs if inspect.isclass(model_or_obj_or_qs) else model_or_obj_or_qs.__class__
             _, fname = model_map[cls]
         return fname
-
+    
     def create(self, user, obj, **kwargs):
         """
         Create a new follow link between a user and an object
         of a registered model type.
-
+        
         """
         follow = Follow(user=user)
         follow.target = obj
         follow.save()
         return follow
-
+            
     def get_or_create(self, user, obj, **kwargs):
         """ 
         Almost the same as `FollowManager.objects.create` - behaves the same 
@@ -44,7 +40,7 @@ class FollowManager(models.Manager):
         if not self.is_following(user, obj):
             return self.create(user, obj, **kwargs), True
         return self.get_follows(obj).get(user=user), False
-
+    
     def is_following(self, user, obj):
         """ Returns `True` or `False` """
         if isinstance(user, AnonymousUser):
@@ -59,7 +55,7 @@ class FollowManager(models.Manager):
         
         if isinstance(model_or_obj_or_qs, QuerySet):
             return self.filter(**{'%s__in' % fname: model_or_obj_or_qs})
-
+        
         if inspect.isclass(model_or_obj_or_qs):
             return self.exclude(**{fname:None})
 
@@ -70,28 +66,28 @@ class FollowManager(models.Manager):
         Returns all the Follow objects associated with a certain model, object or queryset..
         """
         fname = self.fname(model_or_obj_or_qs)
-
+        
         if isinstance(model_or_obj_or_qs, QuerySet):
             return self.filter(**{'%s__in' % fname: model_or_obj_or_qs}).order_by('-datetime')[sIndex:lIndex]
-
+        
         if inspect.isclass(model_or_obj_or_qs):
             return self.exclude(**{fname:None}).order_by('-datetime')[sIndex:lIndex]
-
+            
         return self.filter(**{fname:model_or_obj_or_qs}).order_by('-datetime')[sIndex:lIndex]
 
-
+    
 class Follow(models.Model):
     """
     This model allows a user to follow any kind of object. The followed
     object is accessible through `Follow.target`.
     """
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='following', on_delete=models.CASCADE, )
+    user = models.ForeignKey(User, related_name='following', on_delete=models.CASCADE, )
 
     datetime = models.DateTimeField(auto_now_add=True)
 
     objects = FollowManager()
 
-    def __str__(self):
+    def __unicode__(self):
         return '%s' % self.target
 
     def _get_target(self):
@@ -103,7 +99,7 @@ class Follow(models.Model):
                 # In case the target was deleted in the previous transaction 
                 # it's already gone from the db and this throws DoesNotExist.
                 return None
-
+    
     def _set_target(self, obj):
         for _, fname in model_map.values():
             setattr(self, fname, None)
@@ -111,14 +107,12 @@ class Follow(models.Model):
             return
         _, fname = model_map[obj.__class__]
         setattr(self, fname, obj)
-
+        
     target = property(fget=_get_target, fset=_set_target)
-
 
 def follow_dispatch(sender, instance, created=False, **kwargs):
     if created:
         followed.send(instance.target.__class__, user=instance.user, target=instance.target, instance=instance)
-
 
 def unfollow_dispatch(sender, instance, **kwargs):
     # FIXME: When deleting out of the admin, django *leaves* the transaction
@@ -131,11 +125,11 @@ def unfollow_dispatch(sender, instance, **kwargs):
     # Unfollow handlers should be aware that both target and user can be `None`
     try:
         user = instance.user
-    except get_user_model().DoesNotExist:
+    except User.DoesNotExist:
         user = None
-
+    
     unfollowed.send(instance.target.__class__, user=user, target=instance.target, instance=instance)
-
-
+    
+    
 post_save.connect(follow_dispatch, dispatch_uid='follow.follow_dispatch', sender=Follow)
 post_delete.connect(unfollow_dispatch, dispatch_uid='follow.unfollow_dispatch', sender=Follow)

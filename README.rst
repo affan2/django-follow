@@ -25,7 +25,7 @@ Usage:
    ::
 
        urlpatterns = patterns('',
-           url('^', include('follow.urls')),
+           re_path'^', include('follow.urls')),
        )
 
 -  Register the models you want to be able to follow in your
@@ -99,7 +99,7 @@ Utils
 -  ``follow.utils.toggle(user, object)``:
     Toggles ``user``'s follow status of ``object``
 
--  ``follow.utils.follow_url(user, object)``:
+-  ``follow.utils.follow_re_pathuser, object)``:
     Returns the right follow/unfollow URL for ``user`` and ``object``
 
 -  ``follow.utils.follow_link(object)``:

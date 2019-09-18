@@ -9,13 +9,14 @@ from django.template.loader import render_to_string
 from follow.utils import follow as _follow, unfollow as _unfollow, toggle as _toggle
 from follow import utils
 from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 # from mezzanine.blog.models import BlogPost
 import json
 from follow.models import Follow
 
 import json
+
 
 def check(func):
     """ 
@@ -68,16 +69,23 @@ def toggle(request, app, model, id):
     obj = model.objects.get(pk=id)
     return _toggle(request.user, obj)
 
+
 def get_vendor_followers(request, content_type_id, object_id):
     ctype = get_object_or_404(ContentType, pk=content_type_id)
     obj = get_object_or_404(ctype.model_class(), pk=object_id)
     if request.is_ajax():
-        return render_to_response("follow/friend_list_all.html",
-                                  {"friends": utils.get_follower_users_for_vendor(obj), })
+        return render(
+            request,
+            "follow/friend_list_all.html",
+            {"friends": utils.get_follower_users_for_vendor(obj), }
+        )
     else:
-        return render_to_response("follow/render_friend_list_all.html", {
-            "friends": utils.get_follower_users_for_vendor(obj),
-        })
+        return render(
+            request,
+            "follow/render_friend_list_all.html",
+            {"friends": utils.get_follower_users_for_vendor(obj), }
+        )
+
 
 def get_vendor_followers_subset(request, content_type_id, object_id, sIndex, lIndex):
     ctype = get_object_or_404(ContentType, pk=content_type_id)
@@ -92,12 +100,16 @@ def get_vendor_followers_subset(request, content_type_id, object_id, sIndex, lIn
                                                             'object_id':object_id,
                                                             'sIndex':0,
                                                             'lIndex':settings.MIN_FOLLOWERS_CHUNK})
-        return render_to_response("follow/friend_list_all.html", {
-            "friends": followers,
-            'is_incremental': False,
-            'data_href':data_href,
-            'data_chunk':settings.MIN_FOLLOWERS_CHUNK
-        })
+        return render(
+            request,
+            "follow/friend_list_all.html",
+            {
+                "friends": followers,
+                'is_incremental': False,
+                'data_href':data_href,
+                'data_chunk':settings.MIN_FOLLOWERS_CHUNK
+            }
+        )
 
     if request.is_ajax():
         context = RequestContext(request)
@@ -111,22 +123,32 @@ def get_vendor_followers_subset(request, content_type_id, object_id, sIndex, lIn
             }
             return HttpResponse(json.dumps(ret_data), mimetype="application/json")
     else:
-        return render_to_response("follow/render_friend_list_all.html", {
-            "friends": followers,
-        })       
+        return render(
+            request,
+            "follow/render_friend_list_all.html",
+            {"friends": followers, }
+        )
 
 
 def get_vendor_following(request, content_type_id, object_id):
     ctype = get_object_or_404(ContentType, pk=content_type_id)
     user = get_object_or_404(ctype.model_class(), pk=object_id)
+    context_dict = {
+        "vendors": utils.get_following_vendors_for_user(user),
+    }
     if request.is_ajax():
-        return render_to_response("follow/vendor_following.html", {
-            "vendors": utils.get_following_vendors_for_user(user),
-        })
+        return render(
+            request,
+            "follow/vendor_following.html",
+            context_dict
+        )
     else:
-        return render_to_response("follow/render_vendor_following.html", {
-            "vendors": utils.get_following_vendors_for_user(user),
-        })       
+        return render(
+            request,
+            "follow/render_vendor_following.html",
+            context_dict
+        )
+
 
 def get_vendor_following_subset(request, content_type_id, object_id, sIndex, lIndex):
     ctype = get_object_or_404(ContentType, pk=content_type_id)
@@ -142,26 +164,25 @@ def get_vendor_following_subset(request, content_type_id, object_id, sIndex, lIn
     vendors = utils.get_following_vendors_subset_for_user(user, s, l)
 
     if s == 0:
-        data_href = reverse('get_vendor_following_subset', kwargs={ 'content_type_id':content_type_id,
+        data_href = reverse('get_vendor_following_subset', kwargs={'content_type_id':content_type_id,
                                                             'object_id':object_id,
                                                             'sIndex':0,
                                                             'lIndex':settings.MIN_FOLLOWERS_CHUNK})
 
-        return render_to_response(template, {
-            "vendors": vendors,
-            'is_incremental': False,
-            'data_href':data_href
-        })
-
-    
+        return render(
+            request,
+            template,
+            {
+                "vendors": vendors,
+                'is_incremental': False,
+                'data_href': data_href
+            }
+        )
 
     if request.is_ajax():
         context = RequestContext(request)
-
         context.update({'vendors': vendors,
                         'is_incremental': True})
-
-
         if vendors:
             ret_data = {
                 'html': render_to_string(template, context).strip(),
@@ -175,6 +196,8 @@ def get_vendor_following_subset(request, content_type_id, object_id, sIndex, lIn
         return HttpResponse(json.dumps(ret_data), mimetype="application/json")
 
     else:
-        return render_to_response("follow/render_vendor_following.html", {
-            "vendors": vendors
-        })        
+        return render(
+            request,
+            "follow/render_vendor_following.html",
+            {"vendors": vendors, }
+        )

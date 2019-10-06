@@ -17,6 +17,9 @@ follow/tests.py
 follow/urls.py
 follow/utils.py
 follow/views.py
+follow/migrations/0001_initial.py
+follow/migrations/0002_auto_20190910_0715.py
+follow/migrations/__init__.py
 follow/templates/follow/form.html
 follow/templates/follow/friend_list_all.html
 follow/templates/follow/render_friend_list_all.html

@@ -121,7 +121,7 @@ def get_vendor_followers_subset(request, content_type_id, object_id, sIndex, lIn
             ret_data = {
                 'success': False
             }
-            return HttpResponse(json.dumps(ret_data), mimetype="application/json")
+            return HttpResponse(json.dumps(ret_data), content_type="application/json")
     else:
         return render(
             request,
@@ -193,7 +193,7 @@ def get_vendor_following_subset(request, content_type_id, object_id, sIndex, lIn
                 'success': False
             }
 
-        return HttpResponse(json.dumps(ret_data), mimetype="application/json")
+        return HttpResponse(json.dumps(ret_data), content_type="application/json")
 
     else:
         return render(

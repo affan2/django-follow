@@ -43,7 +43,6 @@ class FollowLinkNode(template.Node):
                 raise template.TemplateSyntaxError('There is no request object in the template context.')
         else:
             user = template.Variable(self.user).resolve(context)
-
         return utils.follow_url(user, obj)
 
 
@@ -54,6 +53,7 @@ def is_following(user, obj):
     """
     return Follow.objects.is_following(user, obj)
 
+
 @register.filter
 def followers(user, obj):
     return utils.get_follower_users_for_object(obj)
@@ -62,6 +62,7 @@ def followers(user, obj):
 @register.filter
 def follower_count(obj):
     return utils.get_follower_count_for_object(obj)
+
 
 @register.filter
 def vendor_following_count(user):
@@ -132,6 +133,7 @@ class AsNode(template.Node):
     def render_result(self, context):
         raise NotImplementedError("Must be implemented by a subclass")
 
+
 class FollowingListSubset(AsNode):
 
     def render_result(self, context):
@@ -143,6 +145,7 @@ class FollowingListSubset(AsNode):
         return reverse('get_vendor_followers_subset', kwargs={
             'content_type_id': content_type, 'object_id': obj_instance.pk, 'sIndex':sIndex, 'lIndex':lIndex})
 
+
 @register.tag
 def vendor_follower_subset_info_url(parser, token):
     bits = token.split_contents()
@@ -152,6 +155,7 @@ def vendor_follower_subset_info_url(parser, token):
     else:
         return FollowingListSubset.handle_token(parser, token)
 
+
 @register.tag
 def vendor_follower_info_url(parser, token):
     bits = token.split_contents()
@@ -159,6 +163,7 @@ def vendor_follower_info_url(parser, token):
         raise template.TemplateSyntaxError("Accepted format {% vendor_follower_info_url [instance] %}")
     else:
         return FollowingList(*bits[1:])
+
 
 class UserFollowingVendorsList(template.Node):
     def __init__(self, user):
@@ -168,6 +173,7 @@ class UserFollowingVendorsList(template.Node):
         user_instance = self.user.resolve(context)
         content_type = ContentType.objects.get_for_model(user_instance).pk
         return reverse('get_vendor_following', kwargs={'content_type_id': content_type, 'object_id': user_instance.pk })
+
 
 class UserFollowingVendorsListSubset(AsNode):
 
@@ -179,6 +185,7 @@ class UserFollowingVendorsListSubset(AsNode):
 
         return reverse('get_vendor_following_subset', kwargs={
             'content_type_id': content_type, 'object_id': obj_instance.pk, 'sIndex':sIndex, 'lIndex':lIndex})
+
 
 @register.tag
 def vendor_following_subset_info_url(parser, token):
@@ -214,6 +221,7 @@ def render_vendor_following_subset(context, user_obj, sIndex, lIndex, data_chunk
             'profile_user': user_obj
         }))
 
+
 @register.tag
 def vendor_following_info_url(parser, token):
     bits = token.split_contents()
@@ -221,6 +229,7 @@ def vendor_following_info_url(parser, token):
         raise template.TemplateSyntaxError("Accepted format {% vendor_following_info_url [instance] %}")
     else:
         return UserFollowingVendorsList(*bits[1:])
+
 
 @register.filter
 def get_class_name(value):

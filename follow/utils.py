@@ -1,11 +1,12 @@
 from django.urls import reverse
 from django.db.models.fields.related import ManyToManyField, ForeignKey
+from django.conf import settings
+from django.db import models
+
 from .models import Follow
 from .registry import registry, model_map
 from actstream.models import Action
 from actstream.views import actions
-from django.conf import settings
-from django.db import models
 
 
 def get_followers_for_object(instance):
@@ -155,15 +156,21 @@ def toggle(user, obj):
 
 
 def follow_link(object):
-    return reverse('follow.views.toggle', args=[object._meta.app_label, object._meta.object_name.lower(), object.pk])
+    from .views import toggle as toggle_view
+
+    return reverse(toggle_view, args=[object._meta.app_label, object._meta.object_name.lower(), object.pk])
 
 
 def unfollow_link(object):
-    return reverse('follow.views.toggle', args=[object._meta.app_label, object._meta.object_name.lower(), object.pk])
+    from .views import toggle as toggle_view
+
+    return reverse(toggle_view, args=[object._meta.app_label, object._meta.object_name.lower(), object.pk])
 
 
 def toggle_link(object):
-    return reverse('follow.views.toggle', args=[object._meta.app_label, object._meta.object_name.lower(), object.pk])
+    from .views import toggle as toggle_view
+
+    return reverse(toggle_view, args=[object._meta.app_label, object._meta.object_name.lower(), object.pk])
 
 
 def follow_url(user, obj):

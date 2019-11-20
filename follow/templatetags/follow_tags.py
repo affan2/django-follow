@@ -1,4 +1,5 @@
 from django import template
+from django.template.loader import get_template
 from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
 
@@ -66,8 +67,9 @@ def follower_count(obj):
 def vendor_following_count(user):
     return utils.get_following_vendors_count_for_user(user)
 
-@register.tag
-def follow_form(parser, token):
+
+@register.simple_tag(takes_context=True)
+def follow_form(context, obj, tpl='follow/form.html'):
     """
     Renders the following form. This can optionally take a path to a custom
     template.
@@ -78,26 +80,15 @@ def follow_form(parser, token):
         {% follow_form object "app/follow_form.html" %}
 
     """
-    bits = token.split_contents()
-    return FollowFormNode(*bits[1:])
 
-class FollowFormNode(template.Node):
-    def __init__(self, obj, tpl=None):
-        self.obj = template.Variable(obj)
-        self.template = tpl[1:-1] if tpl else 'follow/form.html'
+    ctx = {
+        'object': obj,
+        'request': context.get('request'),
+        'user': context.get('user'),
+        'csrf_token': context.get('csrf_token'),
+    }
+    return get_template(tpl).render(ctx)
 
-    def render(self, context):
-        ctx = {'object': self.obj.resolve(context)}
-        return template.loader.render_to_string(self.template, ctx)
-
-class FollowingList(template.Node):
-    def __init__(self, obj):
-        self.object = template.Variable(obj)
-
-    def render(self, context):
-        obj_instance = self.object.resolve(context)
-        content_type = ContentType.objects.get_for_model(obj_instance).pk
-        return reverse('get_vendor_followers', kwargs={'content_type_id': content_type, 'object_id': obj_instance.pk })
 
 class AsNode(template.Node):
     """

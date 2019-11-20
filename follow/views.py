@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.http import HttpResponse, HttpResponseRedirect, \
@@ -5,17 +7,13 @@ from django.http import HttpResponse, HttpResponseRedirect, \
 from django.urls import reverse
 from django.conf import settings
 from django.template.loader import render_to_string
-
-from follow.utils import follow as _follow, unfollow as _unfollow, toggle as _toggle
-from follow import utils
 from django.template import RequestContext
 from django.shortcuts import render, get_object_or_404
 from django.contrib.contenttypes.models import ContentType
-# from mezzanine.blog.models import BlogPost
-import json
-from follow.models import Follow
 
-import json
+from follow.utils import follow as _follow, unfollow as _unfollow, toggle as _toggle
+from follow import utils
+from follow.models import Follow
 
 
 def check(func):
